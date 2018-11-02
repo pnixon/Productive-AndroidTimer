@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_single_timer"
+            android:icon="@drawable/ic_twotone_alarm_on_24px"
+            android:title="Single Timer" />
+        <item
+            android:id="@+id/nav_multiple_timers"
+            android:icon="@drawable/ic_twotone_alarm_on_24px"
+            android:title="Multiple Timers" />
+        <item
+            android:id="@+id/nav_random_timer"
+            android:icon="@drawable/ic_twotone_alarm_on_24px"
+            android:title="Random Timer" />
+    </group>
+</menu>
