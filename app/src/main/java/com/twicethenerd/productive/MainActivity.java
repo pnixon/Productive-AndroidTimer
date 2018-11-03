@@ -7,9 +7,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,41 +16,65 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public String currentButtonAction = "Start";
     public SeekBar timerSeekBar;
     public TextView timerTextView;
+    public Button actionButton;
+    public CountDownTimer countDownTimer;
+    private boolean isRunning = false;
 
     public void updateTimerText(int minutes, int seconds, int miliSeconds) {
         timerTextView.setText(String.format("%02d:%02d:%02d", minutes, seconds, miliSeconds));
     }
 
     public void timerButton(View view) {
-        new CountDownTimer(timerSeekBar.getProgress() * 1000 * 60, 17) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                long totalSeconds = (millisUntilFinished / 1000);
-                int minutesLeft = (int) totalSeconds / 60;
-                int secondsLeft = (int) totalSeconds % 60;
-                int miliSeconds = (int) millisUntilFinished % 100;
+        if (isRunning == false) {
+            isRunning = true;
+            actionButton.setText("Cancel");
 
-                updateTimerText(minutesLeft, secondsLeft, miliSeconds);
-                Log.i("time: ", "Time! " + millisUntilFinished);
-            }
+            countDownTimer = new CountDownTimer(timerSeekBar.getProgress() * 1000 * 60, 41) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    long totalSeconds = (millisUntilFinished / 1000);
+                    int minutesLeft = (int) totalSeconds / 60;
+                    int secondsLeft = (int) totalSeconds % 60;
+                    int miliSeconds = (int) millisUntilFinished % 100;
 
-            @Override
-            public void onFinish() {
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(5000, 255));
+                    updateTimerText(minutesLeft, secondsLeft, miliSeconds);
                 }
+
+                @Override
+                public void onFinish() {
+                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(3000, 255));
+                    }
+                    updateTimerText(0, 0, 0);
+                    resetAfterDelay(1000);
+                }
+            }.start();
+        } else {
+            countDownTimer.cancel();
+            resetAfterDelay(0);
+        }
+    }
+
+    private void resetAfterDelay(int delayTime) {
+        isRunning = false;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                updateTimerText(25, 0, 0);
+                timerSeekBar.setProgress(25);
+                actionButton.setText("Start");
             }
-        }.start();
+        }, delayTime);
     }
 
     @Override
@@ -79,11 +100,13 @@ public class MainActivity extends AppCompatActivity
         timerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int minutes = (int) progress;
-                int seconds = 0;
-                int miliSeconds = 0;
+                if (isRunning == false) {
+                    int minutes = (int) progress;
+                    int seconds = 0;
+                    int miliSeconds = 0;
 
-                updateTimerText(minutes, seconds, miliSeconds);
+                    updateTimerText(minutes, seconds, miliSeconds);
+                }
             }
 
             @Override
@@ -106,6 +129,8 @@ public class MainActivity extends AppCompatActivity
                 handler.postDelayed(this, 1000);
             }
         };
+
+        actionButton = (Button)findViewById(R.id.timer_button);
     }
 
     @Override
