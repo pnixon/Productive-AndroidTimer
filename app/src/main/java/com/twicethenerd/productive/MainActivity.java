@@ -1,6 +1,7 @@
 package com.twicethenerd.productive;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity
 
     public void timerButton(View view) {
         if (isRunning == false) {
-            isRunning = true;
             actionButton.setText("Cancel");
 
             countDownTimer = new CountDownTimer(timerSeekBar.getProgress() * 1000 * 60, 41) {
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
                     int miliSeconds = (int) millisUntilFinished % 100;
 
                     updateTimerText(minutesLeft, secondsLeft, miliSeconds);
+                    isRunning = true;
                 }
 
                 @Override
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         timerSeekBar = (SeekBar)findViewById(R.id.seekBar2);
+        timerSeekBar.setMin(10);
         timerSeekBar.setMax(90);
         timerSeekBar.setProgress(25);
 
@@ -176,7 +178,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_multiple_timers) {
 
         } else if (id == R.id.nav_random_timer) {
-
+            Intent randomTimerIntent = new Intent(timerTextView.getContext(), RandomTimer.class);
+            startActivityForResult(randomTimerIntent, 0);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
