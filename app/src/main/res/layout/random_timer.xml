@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteY="73dp">
 
     <TextView
-        android:id="@+id/maxText"
+        android:id="@+id/workText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="18dp"
@@ -16,34 +16,34 @@
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/maxSeekBar"
+        app:layout_constraintBottom_toTopOf="@+id/workTimeSeekBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/minText"
+        app:layout_constraintStart_toEndOf="@+id/chillText"
         app:layout_constraintTop_toBottomOf="@+id/randomTimerText" />
 
     <SeekBar
-        android:id="@+id/minSeekBar"
+        android:id="@+id/chillTimeSeekBar"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="27dp"
         android:layout_marginEnd="133dp"
         app:layout_constraintBottom_toTopOf="@+id/actionButton"
-        app:layout_constraintEnd_toStartOf="@+id/maxSeekBar"
+        app:layout_constraintEnd_toStartOf="@+id/workTimeSeekBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/maxSeekBar" />
+        app:layout_constraintTop_toTopOf="@+id/workTimeSeekBar" />
 
     <SeekBar
-        android:id="@+id/maxSeekBar"
+        android:id="@+id/workTimeSeekBar"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="18dp"
         app:layout_constraintBottom_toTopOf="@+id/actionButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/minSeekBar"
-        app:layout_constraintTop_toBottomOf="@+id/maxText" />
+        app:layout_constraintStart_toEndOf="@+id/chillTimeSeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/workText" />
 
     <TextView
-        android:id="@+id/minText"
+        android:id="@+id/chillText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="27dp"
@@ -52,10 +52,10 @@
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/minSeekBar"
-        app:layout_constraintEnd_toStartOf="@+id/maxText"
+        app:layout_constraintBottom_toTopOf="@+id/chillTimeSeekBar"
+        app:layout_constraintEnd_toStartOf="@+id/workText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/maxText" />
+        app:layout_constraintTop_toTopOf="@+id/workText" />
 
     <TextView
         android:id="@+id/randomTimerText"
@@ -67,7 +67,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="70sp"
-        app:layout_constraintBottom_toTopOf="@+id/maxText"
+        app:layout_constraintBottom_toTopOf="@+id/workText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -85,6 +85,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maxSeekBar" />
+        app:layout_constraintTop_toBottomOf="@+id/workTimeSeekBar" />
 
 </android.support.constraint.ConstraintLayout>

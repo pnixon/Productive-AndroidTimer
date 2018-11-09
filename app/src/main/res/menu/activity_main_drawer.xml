@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_twotone_alarm_on_24px"
             android:title="Single Timer" />
         <item
-            android:id="@+id/nav_multiple_timers"
+            android:id="@+id/productivity_timer"
             android:icon="@drawable/ic_twotone_alarm_on_24px"
-            android:title="Multiple Timers" />
+            android:title="Productivity Timer" />
         <item
             android:id="@+id/nav_random_timer"
             android:icon="@drawable/ic_twotone_alarm_on_24px"

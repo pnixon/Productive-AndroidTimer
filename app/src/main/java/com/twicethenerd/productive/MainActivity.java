@@ -174,9 +174,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_single_timer) {
-
-        } else if (id == R.id.nav_multiple_timers) {
-
+            Intent mainActivityIntent = new Intent(timerTextView.getContext(), MainActivity.class);
+            startActivityForResult(mainActivityIntent, 0);
+        } else if (id == R.id.productivity_timer) {
+            Intent productivityIntent = new Intent(timerTextView.getContext(), ProductivityTimer.class);
+            startActivityForResult(productivityIntent, 0);
         } else if (id == R.id.nav_random_timer) {
             Intent randomTimerIntent = new Intent(timerTextView.getContext(), RandomTimer.class);
             startActivityForResult(randomTimerIntent, 0);

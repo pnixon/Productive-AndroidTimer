@@ -14,15 +14,13 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.util.Random;
+public class ProductivityTimer extends AppCompatActivity {
 
-public class RandomTimer extends AppCompatActivity {
-
-    SeekBar minimumSeekBar;
-    SeekBar maximumSeekBar;
+    SeekBar chillTimeSeekBar;
+    SeekBar workTimeSeekBar;
     TextView timeTextView;
-    TextView minTextView;
-    TextView maxTextView;
+    TextView chillTextView;
+    TextView workTextView;
     Button actionButton;
     boolean isRunning = false;
     CountDownTimer countDownTimer;
@@ -31,32 +29,28 @@ public class RandomTimer extends AppCompatActivity {
         timeTextView.setText(String.format("%02d:%02d:%02d", minutes, seconds, miliSeconds));
     }
 
-    private int getRandomTimeInRange() {
-        int min = minimumSeekBar.getProgress();
-        int max = maximumSeekBar.getProgress();
-        Integer random = (new Random().nextInt((max - min) + 1) + min);
-        int millis = random * 1000 * 60;
-        return millis;
-    }
-
     private void resetAfterDelay(int delayTime) {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 isRunning = false;
-                timeTextView.setText("RA:ND:OM");
-                minimumSeekBar.setProgress(5);
-                maximumSeekBar.setProgress(30);
+                timeTextView.setText("WO:RK:ER");
+                chillTimeSeekBar.setProgress(5);
+                workTimeSeekBar.setProgress(25);
                 actionButton.setText("Start");
             }
         }, delayTime);
+    }
+
+    private int toMinutes(int seekValue) {
+        return seekValue * 1000 * 60;
     }
 
     public void timerButton(View view) {
         if (isRunning == false) {
             actionButton.setText("Cancel");
 
-            countDownTimer = new CountDownTimer(getRandomTimeInRange(), 41) {
+            countDownTimer = new CountDownTimer(toMinutes(workTimeSeekBar.getProgress()), 41) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     long totalSeconds = (millisUntilFinished / 1000);
@@ -74,8 +68,28 @@ public class RandomTimer extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         vibrator.vibrate(VibrationEffect.createOneShot(3000, 255));
                     }
-                    updateTimerText(0, 0, 0);
-                    resetAfterDelay(1000);
+                    countDownTimer = new CountDownTimer(toMinutes(chillTimeSeekBar.getProgress()), 41) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            long totalSeconds = (millisUntilFinished / 1000);
+                            int minutesLeft = (int) totalSeconds / 60;
+                            int secondsLeft = (int) totalSeconds % 60;
+                            int miliSeconds = (int) millisUntilFinished % 100;
+
+                            updateTimerText(minutesLeft, secondsLeft, miliSeconds);
+                            isRunning = true;
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                vibrator.vibrate(VibrationEffect.createOneShot(3000, 255));
+                            }
+                            updateTimerText(0, 0, 0);
+                            resetAfterDelay(1000);
+                        }
+                    }.start();
                 }
             }.start();
         } else {
@@ -87,26 +101,26 @@ public class RandomTimer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_random_timer);
+        setContentView(R.layout.activity_productivity_timer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         /* set up elements */
         timeTextView = (TextView)findViewById(R.id.randomTimerText);
-        minTextView = (TextView)findViewById(R.id.chillText);
-        maxTextView = (TextView)findViewById(R.id.workText);
-        minimumSeekBar = (SeekBar)findViewById(R.id.chillTimeSeekBar);
-        maximumSeekBar = (SeekBar)findViewById(R.id.workTimeSeekBar);
+        chillTextView = (TextView)findViewById(R.id.chillText);
+        workTextView = (TextView)findViewById(R.id.workText);
+        chillTimeSeekBar = (SeekBar)findViewById(R.id.chillTimeSeekBar);
+        workTimeSeekBar = (SeekBar)findViewById(R.id.workTimeSeekBar);
         actionButton = (Button)findViewById(R.id.actionButton);
 
-        minimumSeekBar.setMin(5);
-        minimumSeekBar.setMax(30);
-        minimumSeekBar.setProgress(5);
-        minimumSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        chillTimeSeekBar.setMin(1);
+        chillTimeSeekBar.setMax(30);
+        chillTimeSeekBar.setProgress(5);
+        chillTimeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                maximumSeekBar.setMin(progress);
-                minTextView.setText(String.format("Min: %2d", progress));
+                workTimeSeekBar.setMin(progress);
+                chillTextView.setText(String.format("Min: %2d", progress));
             }
 
             @Override
@@ -121,14 +135,14 @@ public class RandomTimer extends AppCompatActivity {
         });
 
 
-        maximumSeekBar.setMin(5);
-        maximumSeekBar.setMax(90);
-        maximumSeekBar.setProgress(30);
-        maximumSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        workTimeSeekBar.setMin(1);
+        workTimeSeekBar.setMax(90);
+        workTimeSeekBar.setProgress(30);
+        workTimeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                minimumSeekBar.setMax(progress);
-                maxTextView.setText(String.format("Max: %2d", progress));
+                chillTimeSeekBar.setMax(progress);
+                workTextView.setText(String.format("Max: %2d", progress));
             }
 
             @Override

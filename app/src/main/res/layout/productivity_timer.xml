@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222"
+    tools:layout_editor_absoluteY="73dp">
+
+    <TextView
+        android:id="@+id/randomTimerText"
+        android:layout_width="wrap_content"
+        android:layout_height="93dp"
+        android:layout_marginBottom="11dp"
+        android:text="WO:RK:ER"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="70sp"
+        app:layout_constraintBottom_toTopOf="@+id/chillText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/chillText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="2dp"
+        android:text="Chill: 05"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/chillTimeSeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/workText"
+        app:layout_constraintTop_toBottomOf="@+id/randomTimerText" />
+
+    <TextView
+        android:id="@+id/workText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="100dp"
+        android:text="Work: 25"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/workTimeSeekBar"
+        app:layout_constraintEnd_toStartOf="@+id/chillText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/randomTimerText" />
+
+    <SeekBar
+        android:id="@+id/workTimeSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/actionButton"
+        app:layout_constraintEnd_toStartOf="@+id/chillTimeSeekBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/chillTimeSeekBar" />
+
+    <SeekBar
+        android:id="@+id/chillTimeSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="41dp"
+        app:layout_constraintBottom_toTopOf="@+id/actionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/workTimeSeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/chillText" />
+
+    <Button
+        android:id="@+id/actionButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginEnd="41dp"
+        android:background="@android:drawable/dialog_holo_dark_frame"
+        android:onClick="timerButton"
+        android:text="Start"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chillTimeSeekBar" />
+
+</android.support.constraint.ConstraintLayout>
